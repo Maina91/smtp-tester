@@ -3,11 +3,14 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import nodemailer from "nodemailer";
 import { smtpSchema } from "./validate";
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 app.use(express.json());
 
 const allowedOrigins = process.env.CORS_ORIGINS?.split(',') || [];
+
 app.use(cors({ 
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -15,7 +18,8 @@ app.use(cors({
     } else {
       callback(new Error('Not allowed by CORS'));
     }
-  }
+  },
+  credentials: true
 }));
 
 app.post("/api/test-smtp", async (req:Request, res: Response) => {
