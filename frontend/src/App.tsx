@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { CheckCircle, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button"
 import { Loader2 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
+import { LogPanel } from "@/components/ui/log-panel";
+
 
 type SmtpPayload = {
   host: string;
@@ -130,12 +131,11 @@ function App() {
             </div>
           </form>
           {(result || error) && (
-            <div
-              className={`mt-6 flex items-center gap-2 px-4 py-3 rounded-xl text-sm ${result ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
-                }`}
-            >
-              {result ? <CheckCircle className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
-              <span>{result || error}</span>
+            <div className="mt-6">
+              <LogPanel
+                status={result ? "success" : "error"}
+                message={result || error || ""}
+              />
             </div>
           )}
         </div>
